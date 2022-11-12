@@ -5,7 +5,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import CampsitesDirectoryPage from './pages/CampsitesDirectoryPage';
 import './App.css';
-import CampsitesList from './campsites/CampsitesList';
 import CampsiteDetailPage from './pages/CampsiteDetailPage';
 import AboutPage from './pages/AboutPage';
 

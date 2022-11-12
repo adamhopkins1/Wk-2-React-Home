@@ -42,9 +42,7 @@ const ContactPage = () => {
                     <h2>Send Us Your Feedback</h2>
                     <hr />
                 </Col>
-                <Col md='10'>
-                    <ContactForm/>
-                </Col>
+                <Col md='10'><ContactForm/></Col>
             </Row>
         </Container>
     );

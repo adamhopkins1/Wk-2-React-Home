@@ -12,6 +12,12 @@ export const selectFeaturedCampsite = () => {
     return CAMPSITES.find((campsite) => campsite.featured);
 }
 
+export const selectRandomCampsite = () => {
+    return CAMPSITES.find((campsite) => campsite.featured);
+}
+
+
+
 
 
 export default selectAllCampsites;

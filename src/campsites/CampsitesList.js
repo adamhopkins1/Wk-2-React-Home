@@ -1,5 +1,5 @@
 import { Col, Row, } from 'reactstrap';
-import CampsiteCard from "../campsites/CampsiteCard";
+import CampsiteCard from '../campsites/CampsiteCard';
 import { selectAllCampsites } from './campsitesSlice';
 
 
@@ -10,7 +10,7 @@ const CampsitesList = () => {
             {campsites.map((campsite) => {
                 return (
                     <Col
-                     md='5'
+                     md='12'
                     className='m-4'
                      key={campsite.id} 
                      >
