@@ -1,8 +1,9 @@
 import { PARTNERS } from "../components/PARTNERS";
+import {useSelector} from 'react-redux';
 
 
 export const selectAllPartners = () => {
-    return PARTNERS;
+    const partners = useSelector(selectAllPartners);
 };
 
 
