@@ -1,5 +1,6 @@
 import {Container, Row} from 'reactstrap';
 import { useParams } from 'react-router-dom';
+import { useSelector} from 'react-redux';
 import { selectCampsiteById } from '../campsites/campsitesSlice';
 import CampsiteDetail from '../campsites/CampsiteDetail';
 import CommentsList from '../comments/CommentList';
@@ -7,7 +8,8 @@ import SubHeader from '../components/SubHeader';
 
 const CampsiteDetailPage = () =>{
     const { campsiteId } = useParams();
-    const campsite = selectCampsiteById(campsiteId);
+    const campsite = useSelector(selectCampsiteById(campsiteId));
+    console.log('campsite:', campsite);
 
     return (
         <Container>
