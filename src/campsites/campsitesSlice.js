@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CAMPSITES } from '../../app/shared/CAMPSITES';
+import { CAMPSITES } from '../components/CAMPSITES';
 
 const initialState = {
     campsitesArray: CAMPSITES

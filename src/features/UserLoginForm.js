@@ -10,8 +10,8 @@ import {
     Button
 } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import defaultAvatar from '../../app/assets/img/unicorn.png';
-import { validateUserLoginForm } from '../../utils/validateUserLoginForm';
+import defaultAvatar from '../img/unicorn.png';
+import { validateUserLoginForm } from '../utils/validateUserLoginForm';
 
 
 const UserLoginForm = () => {
@@ -67,6 +67,7 @@ const UserLoginForm = () => {
 
                     }}
                      onSubmit={handleLogin}
+                     validate = {validateUserLoginForm}
                 >
                     <Form>
                         <FormGroup>

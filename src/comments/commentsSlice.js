@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { COMMENTS } from '../../app/shared/COMMENTS';
+import { COMMENTS } from '../components/COMMENTS';
 
 const initialState = {
     commentsArray: COMMENTS

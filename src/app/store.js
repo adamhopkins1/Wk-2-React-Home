@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import { campsitesReducer } from '../features/campsites/campsitesSlice';
-import { commentsReducer } from '../features/comments/commentsSlice';
-import { partnersReducer } from '../features/partners/partnersSlice';
-import { promotionsReducer } from '../features/promotions/promotionsSlice';
+import { campsitesReducer } from '../campsites/campsitesSlice';
+import { commentsReducer } from '../comments/commentsSlice';
+import { partnersReducer } from '../partners/partnersSlice';
+import { promotionsReducer } from '../promotions/promotionsSlice';
 import { userReducer } from '../features/userSlice';
 
 export const store = configureStore({
