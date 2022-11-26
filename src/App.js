@@ -7,6 +7,38 @@ import CampsitesDirectoryPage from './pages/CampsitesDirectoryPage';
 import './App.css';
 import CampsiteDetailPage from './pages/CampsiteDetailPage';
 import AboutPage from './pages/AboutPage';
+import {useEffect} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import { PARTNERS } from '../../app/shared/PARTNERS';
+import { baseUrl } from '../../app/shared/baseUrl';
+import { mapImageURL } from '../../utils/mapImageURL';
+
+
+const dispatch = useDispatch();
+
+useEffect(() => {
+    dispatch(fetchCampsites());
+}, [dispatch]);
+
+useEffect(() => {
+    dispatch(fetchCampsites());
+    dispatch(fetchPartners());
+}, [dispatch]);
+
+useEffect(() => {
+    dispatch(fetchCampsites());
+    dispatch(fetchPartners());
+    dispatch(fetchPromotions());
+}, [dispatch]);
+
+useEffect(() => {
+    dispatch(fetchCampsites());
+    dispatch(fetchPartners());
+    dispatch(fetchPromotions());
+    dispatch(fetchComments());
+}, [dispatch]);
+
 
 function App() {
     return (

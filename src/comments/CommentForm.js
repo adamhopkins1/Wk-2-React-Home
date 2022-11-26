@@ -1,81 +1,67 @@
-import { useState } from 'react';
-import {useDispatch} from 'react-redux';
-import { addComment } from './commentsSlice';
-import { Button, Modal, ModalHeader, ModalBody, FormGroup, Label } from 'reactstrap';
-import { Formik, Field, Form,ErrorMessage } from 'formik';
-import { validateCommentForm } from '../utils/validateCommentForm';
-
-const CommentForm = ({ campsiteId }) => {
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const dispatch = useDispatch();
-    const handleSubmit = (values) => {
-        const comment = 
-        {
-            campsiteId: parseInt(campsiteId),
-            rating: values.rating,
-            author: values.author,
-            text: values.commentText,
-            date: new Date(Date.now()).toISOString()
-        };
-        console.log(comment);
-        dispatch(addComment(comment));
-        setModalOpen(false);
-    };
-
-    return (
-        <>
-            <Button outline onClick={() => setModalOpen(true)}>
-                <i className="fa fa-pencil fa-lg" /> Add Comment
-            </Button>
-            <Modal isOpen={modalOpen}>
-                <ModalHeader toggle={() => setModalOpen(false)}>Add Comment</ModalHeader>
-                <ModalBody>
-                    <Formik initialValues={{ rating: undefined, author: '', commentText: '' }} onSubmit={ handleSubmit } validate={validateCommentForm}>
-                        <Form>
-                            <FormGroup>
-                                <Label htmlFor="rating">Rating</Label>
-                                <Field
-                                    name='rating'
-                                    as='select'
-                                    className='form-control'
-                                >
-                                    <option>Select...</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </Field>
-                                <ErrorMessage name='rating'>{(msg) => <p className='text-danger'>{msg}</p>}</ErrorMessage>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="author">Your Name</Label>
-                                <Field
-                                    name='author'
-                                    placeholder='Your Name'
-                                    className='form-control'
-                                />
-                                <ErrorMessage name='author'>{(msg) => <p className='text-danger'>{msg}</p>}</ErrorMessage>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="commentText">Comment</Label>
-                                <Field
-                                    name='commentText'
-                                    as='textarea'
-                                    rows='12'
-                                    className='form-control'
-                                />
-                            </FormGroup>
-                            <Button type="submit" color="primary">
-                                Submit
-                            </Button>
-                        </Form>
-                    </Formik>
-                </ModalBody>
-            </Modal>
-        </>
+import { createSlice } from '@reduxjs/toolkit';
+//import { COMMENTS } from '../../app/shared/COMMENTS';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { baseUrl } from '../../app/shared/baseUrl';
+export const fetchComments = createAsyncThunk(
+    'comments/fetchComments',
+    async () => {
+        const response = await fetch(baseUrl + 'partners');
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status: ' + response.status);
+        }
+        const data = await response.json();
+        return data;
+    }
+);
+export const postComment = createAsyncThunk(
+    'comments/postComment',
+    async (comment, { dispatch }) => {
+        const response = await fetch(baseUrl + 'comments',
+        {method:'POST',
+        body:JSON.stringify(comment),
+        headers:{'Content-Type': 'application/json'}}
+        )
+        if (!response.ok) {
+            return Promise.reject('Unable to fetch, status: ' + response.status);
+        }
+        const data = await response.json();
+        return data;
+    }
+);
+const initialState = {
+    commentsArray: [],
+    isLoading: true,
+    errMsg: ''
+};
+const commentsSlice = createSlice({
+    name: 'comments',
+    initialState,
+    reducers: {},
+    extraReducers: {
+        [fetchComments.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [fetchComments.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.errMsg = '';
+            state.commentsArray = action.payload;
+        },
+        [fetchComments.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.errMsg = action.error ? action.error.message : 'Fetch failed';
+        },
+        [postComment.rejected]: (state, action) => {
+            alert(
+                'Your comment could not be posted'
+                + action.error ? action.error.message : 'Fetch failed'
+                )
+        },
+    },
+});
+export const commentsReducer = commentsSlice.reducer;
+export const { addComment } = commentsSlice.actions;
+export const selectCommentsByCampsiteId = (campsiteId) => (state) => {
+    return state.comments.commentsArray.filter(
+        (comment) => comment.campsiteId === parseInt(campsiteId)
     );
 };
-
-export default CommentForm;
